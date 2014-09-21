@@ -1,29 +1,31 @@
 import pylast
-import twitter
+from twitter import *
 import time
 
 ###################PYLAST AUTH#############################################################
 
-API_KEY = 			''
-API_SECRET = 		''
-username = 			''
+API_KEY = 			'YOUR LASTFM API KEY HERE'
+API_SECRET = 			'YOUR LASTFM API SECRET KEY HERE'
+username = 			'YOUR LASTFM USERNAME'
 password_hash = pylast.md5(
-					'')
+				'YOUR LASTFM PASSWORD')
 
 network = pylast.get_lastfm_network(
 api_key = API_KEY, api_secret = API_SECRET,
 username = username, password_hash = password_hash)
-user = pylast.User("", network)
+user = pylast.User(username, network)
 
 ###################PYLAST AUTH#############################################################
 
 ###################TWITTER AUTH############################################################
 
-api = twitter.Api(
-					consumer_key='',
-					consumer_secret='',
-					access_token_key='', 
-					access_token_secret='')
+t = Twitter(
+	auth=OAuth(
+		'YOUR TWITTER TOKEN KEY', 
+		'YOUR TWITTER TOKEN SECRET KEY',
+		'YOUR TWITTER CONSUMER KEY',
+		'YOUR TWITTER CONSUMER SECRET KEY')
+)
 
 ###################TWITTER AUTH#############################################################
 
@@ -35,9 +37,10 @@ while True:
 		if old == current:
 			pass
 		else:
-			f.seek(0)
-			f.truncate()
-			f.write(current)
-			api.PostUpdate("Now Playing: " + current)
+			if 'None' != current:
+				f.seek(0)
+				f.truncate()
+				f.write(current)
+				t.statuses.update(status="#NowPlaying " + current)
 		f.close()
 time.sleep(60)
