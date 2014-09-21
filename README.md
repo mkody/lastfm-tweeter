@@ -13,5 +13,5 @@ Instructions
 Todo
 ====
 
-[ ] Config file
-[ ] Fix some bugs?
+- [ ] Config file
+- [ ] Fix some bugs?
